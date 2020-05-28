@@ -1,56 +1,75 @@
 package com.jkt.training.entity;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 public class Employees {
 
-  private String EmpId;
-	private String EmpName;
-	private String EmpEmailId;
-	private String Password;
-	private int EmpLeaveEarned;
-	private Employees Manager;
-	public String getEmpId() {
-		return EmpId;
+  	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private String id;
+	private String empName;
+	private String empEmailId;
+	private String password;
+	private int empLeaveEarned;
+	private Employees manager;
+	
+	public Employees()
+	{
+		super();
 	}
-	public void setEmpId(String empId) {
-		EmpId = empId;
+	public Employees(String id, String empName, String empEmailId, String password, int empLeaveEarned,
+			Employees manager) {
+		super();
+		this.id = id;
+		this.empName = empName;
+		this.empEmailId = empEmailId;
+		this.password = password;
+		this.empLeaveEarned = empLeaveEarned;
+		this.manager = manager;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
 	}
 	public String getEmpName() {
-		return EmpName;
+		return empName;
 	}
 	public void setEmpName(String empName) {
-		EmpName = empName;
+		this.empName = empName;
 	}
 	public String getEmpEmailId() {
-		return EmpEmailId;
+		return empEmailId;
 	}
 	public void setEmpEmailId(String empEmailId) {
-		EmpEmailId = empEmailId;
+		this.empEmailId = empEmailId;
 	}
 	public String getPassword() {
-		return Password;
+		return password;
 	}
 	public void setPassword(String password) {
-		Password = password;
+		this.password = password;
 	}
 	public int getEmpLeaveEarned() {
-		return EmpLeaveEarned;
+		return empLeaveEarned;
 	}
 	public void setEmpLeaveEarned(int empLeaveEarned) {
-		EmpLeaveEarned = empLeaveEarned;
+		this.empLeaveEarned = empLeaveEarned;
 	}
 	public Employees getManager() {
-		return Manager;
+		return manager;
 	}
 	public void setManager(Employees manager) {
-		Manager = manager;
+		this.manager = manager;
 	}
-	
 	
 	@Override
 	public String toString() {
-		return "Employees [EmpId=" + EmpId + ", EmpName=" + EmpName + ", EmpEmailId=" + EmpEmailId + ", Password="
-				+ Password + ", EmpLeaveEarned=" + EmpLeaveEarned + ", Manager=" + Manager + "]";
+		return "Employees [id=" + id + ", empName=" + empName + ", empEmailId=" + empEmailId + ", password=" + password
+				+ ", empLeaveEarned=" + empLeaveEarned + ", manager=" + manager + "]";
 	}
 }
