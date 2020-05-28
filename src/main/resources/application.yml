@@ -3,6 +3,10 @@ spring:
     data-username: root
     password: admin
     url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/jktlms
-  jpa:    hibernate:      ddl-auto: update    show-sql: true
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
     
-server:  port: 8080
+server:
+  port: 8080
