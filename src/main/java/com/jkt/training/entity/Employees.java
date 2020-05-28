@@ -9,7 +9,7 @@ public class Employees {
 
   	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String id;
+	private int id;
 	private String empName;
 	private String empEmailId;
 	private String password;
@@ -20,7 +20,7 @@ public class Employees {
 	{
 		super();
 	}
-	public Employees(String id, String empName, String empEmailId, String password, int empLeaveEarned,
+	public Employees(int id, String empName, String empEmailId, String password, int empLeaveEarned,
 			Employees manager) {
 		super();
 		this.id = id;
@@ -30,10 +30,10 @@ public class Employees {
 		this.empLeaveEarned = empLeaveEarned;
 		this.manager = manager;
 	}
-	public String getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getEmpName() {
