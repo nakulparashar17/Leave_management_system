@@ -14,21 +14,21 @@ public class Employees {
 	private String empEmailId;
 	private String password;
 	private int empLeaveEarned;
-	private Employees manager;
+	private String role;
 	
 	public Employees()
 	{
 		super();
 	}
 	public Employees(int id, String empName, String empEmailId, String password, int empLeaveEarned,
-			Employees manager) {
+			String role) {
 		super();
 		this.id = id;
 		this.empName = empName;
 		this.empEmailId = empEmailId;
 		this.password = password;
 		this.empLeaveEarned = empLeaveEarned;
-		this.manager = manager;
+		this.role = role;
 	}
 	public int getId() {
 		return id;
@@ -60,16 +60,16 @@ public class Employees {
 	public void setEmpLeaveEarned(int empLeaveEarned) {
 		this.empLeaveEarned = empLeaveEarned;
 	}
-	public Employees getManager() {
-		return manager;
+	public String getRole() {
+		return role;
 	}
-	public void setManager(Employees manager) {
-		this.manager = manager;
+	public void setRole(String role) {
+		this.role = role;
 	}
 	
 	@Override
 	public String toString() {
 		return "Employees [id=" + id + ", empName=" + empName + ", empEmailId=" + empEmailId + ", password=" + password
-				+ ", empLeaveEarned=" + empLeaveEarned + ", manager=" + manager + "]";
+				+ ", empLeaveEarned=" + empLeaveEarned + ", role=" + role + "]";
 	}
 }
