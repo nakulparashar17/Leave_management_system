@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 import com.jkt.training.entity.Employees;
 import com.jkt.training.service.EmployeeService;
+
 @RestController
 public class EmployeesController {
 
@@ -23,7 +23,8 @@ public class EmployeesController {
 	{
 		return empser.getAllEmployees();
 	}
-	@GetMapping("/employee/{id}")
+	
+	@GetMapping("/employees/{id}")
 	public Optional<Employees> getEmpbyId(@PathVariable int id)
 	{
 		return empser.getEmployee(id);
@@ -36,6 +37,15 @@ public class EmployeesController {
 		//System.out.println(employee.toString());
 		return "New Employee Added";
 	}
+	
+//	@PostMapping(path="/employees/{eid}/manager",consumes = "application/json")
+//	public String addMan(@RequestBody Employees employee ,@PathVariable int eid)
+//	{
+//		employee.setManager(new Employees(0,"","","",0,eid));
+//		empser.addMan(employee);
+//		//System.out.println(employee.toString());
+//		return "New Employee Added";
+//	}
 	
 	@PutMapping(path="/employees/{id}",consumes="application/json")
 	public String updateEmp(@RequestBody Employees emp, @PathVariable int id)

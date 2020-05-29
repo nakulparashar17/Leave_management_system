@@ -6,25 +6,33 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 
 @Entity
+@Table(name = "leaves_track")
 public class LeavesTrack {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@NotNull(message = "please select type of leave")
+	@NotEmpty(message = "please select type of leave")
 	private String type;
 	
-	@NotNull(message = "please provide reason for leave")
+	@NotEmpty(message = "please provide reason for leave")
 	private String reason;
 	
+	@Temporal(TemporalType.DATE)
 	@NotNull(message = "please provide start date")
 	private Date fromDate;
 	
+	@Temporal(TemporalType.DATE)
 	@NotNull(message = "please provide end date")
 	private Date toDate;
 	
@@ -33,6 +41,9 @@ public class LeavesTrack {
 	private boolean acceptRejectFlag;
 	
 	private boolean active;
+	
+	@ManyToOne
+	private Employees employee;
 
 	public LeavesTrack() {
 		super();
@@ -64,6 +75,18 @@ public class LeavesTrack {
 	public void setId(int id) {
 		this.id = id;
 	}
+
+	public Employees getEmployee() {
+		return employee;
+	}
+
+
+
+	public void setEmployee(Employees employee) {
+		this.employee = employee;
+	}
+
+
 
 	public String getType() {
 		return type;

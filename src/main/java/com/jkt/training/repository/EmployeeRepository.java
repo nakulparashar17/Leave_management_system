@@ -1,5 +1,9 @@
 package com.jkt.training.repository;
 
-public interface EmployeeRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.jkt.training.entity.Employees;
+
+public interface EmployeeRepository extends JpaRepository<Employees, Integer> {
 
 }

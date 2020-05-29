@@ -9,9 +9,10 @@ import com.jkt.training.repository.EmployeeRepository;
 @Service
 public class EmployeeService {
 
-  @Autowired
-	   private EmployeeRepository emprepo;
-	public List<Employees> getAllEmployees()
+	@Autowired
+  	private EmployeeRepository emprepo;
+	
+  	public List<Employees> getAllEmployees()
 	{
 		return emprepo.findAll();
 	}
@@ -27,6 +28,12 @@ public class EmployeeService {
 		emprepo.save(employee);
 	}
 	
+	
+//	//mapping
+//	public void addMan(Employees employee)
+//	{
+//		emprepo.save(employee);
+//	}
 
 	public void updateEmp(Employees emp,int EmpId)
 	{

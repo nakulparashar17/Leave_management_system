@@ -1,8 +1,18 @@
 package com.jkt.training.entity;
+//import java.util.HashSet;
+//import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+//import javax.persistence.OneToMany;
+import javax.validation.constraints.NotEmpty;
+
+import javax.validation.constraints.Email;
 
 @Entity
 public class Employees {
@@ -10,11 +20,27 @@ public class Employees {
   	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String empName;
+	
+  	@NotEmpty(message = "Provide a Employee Name!")
+  	private String empName;
+  	
+  	@NotEmpty(message = "Email cannot be Empty!!")
+  	@Email(message = "Please provide a valid email!")
 	private String empEmailId;
-	private String password;
+
+  	@NotEmpty(message = "Password cannot be Empty!!")
+  	private String password;
+	
 	private int empLeaveEarned;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "manager_id")
 	private Employees manager;
+//	
+//	@OneToMany(mappedBy = "manager")
+//	private Set<Employees> subordinate=new HashSet<Employees>();
+	
+	
 	
 	public Employees()
 	{
@@ -28,7 +54,7 @@ public class Employees {
 		this.empEmailId = empEmailId;
 		this.password = password;
 		this.empLeaveEarned = empLeaveEarned;
-		this.manager = manager;
+		this.manager =manager;
 	}
 	public int getId() {
 		return id;
