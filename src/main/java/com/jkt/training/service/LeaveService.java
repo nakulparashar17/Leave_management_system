@@ -1,5 +1,6 @@
 package com.jkt.training.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +19,7 @@ public class LeaveService {
 	@Autowired
 	private LeaveRepository repository;
 	
+	//FOR POST/PUT MAPPING
 	@SuppressWarnings("deprecation")
 	public LeavesTrack applyLeaves(LeavesTrack leaves) {
 		if(!leaves.getFromDate().equals(null)&&!leaves.getToDate().equals(null)
@@ -32,6 +34,7 @@ public class LeaveService {
 		}
 	}
 	
+	//FOR GET MAPPING(GETTING ALL)
 	public List<LeavesTrack> getAllLeaves(){
 		if(repository.findAll().isEmpty()) 
 			throw new NotFoundException("Leaves record is Empty!");
@@ -39,6 +42,7 @@ public class LeaveService {
 			return repository.findAll();
 	}
 	
+	//FOR GET MAPPING (BY ID)
 	public Optional<LeavesTrack> getLeavesById(int id) {
 		if(repository.findById(id).isPresent())
 			return repository.findById(id);
@@ -46,20 +50,7 @@ public class LeaveService {
 			throw new NotFoundException("Leave Record with id="+id+" not exist!");
 	}
 	
-	public LeavesTrack updateLeaves(LeavesTrack leaves,int id) {
-		if(repository.existsById(id)) {
-			if(!leaves.getFromDate().equals(null)&&!leaves.getToDate().equals(null)
-					&&!leaves.getReason().equals(null)&&!leaves.getType().equals(null)) {
-				return repository.save(leaves);
-			}
-			else
-				throw new NotFoundException("Wrong Update/missing data!!");
-		}
-		else
-			throw new NotFoundException("Leaves record Id not found for updation!");
-		 
-	}
-	
+	//FOR DELETEMAPPING
 	public List<LeavesTrack> getAllActiveLeaves() {
 		 return repository.getAllActiveLeaves();
 	}
@@ -71,4 +62,14 @@ public class LeaveService {
 			throw new NotFoundException("Leaves record Id not found for deletion!");
 		
 	}
+	
+	//MAPPING SERVICE METHOD FOR GETTING AND SETTING LEAVES ACCORDING TO EMPLOYEES
+	
+	public List<LeavesTrack> getAllLeavesByEmployeeId(int eid) {
+		List<LeavesTrack> leaves=new ArrayList<LeavesTrack>();
+		repository.findByEmployeeId(eid).forEach(leaves::add);
+		return leaves;
+	}
+	
+	
 }

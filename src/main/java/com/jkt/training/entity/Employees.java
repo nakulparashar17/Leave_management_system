@@ -1,6 +1,6 @@
 package com.jkt.training.entity;
-//import java.util.HashSet;
-//import java.util.Set;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -9,7 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-//import javax.persistence.OneToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotEmpty;
 
 import javax.validation.constraints.Email;
@@ -18,7 +19,8 @@ import javax.validation.constraints.Email;
 public class Employees {
 
   	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+  	@SequenceGenerator(name = "gen",initialValue = 100)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "gen" )
 	private int id;
 	
   	@NotEmpty(message = "Provide a Employee Name!")
@@ -33,12 +35,12 @@ public class Employees {
 	
 	private int empLeaveEarned;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.REMOVE)
 	@JoinColumn(name = "manager_id")
 	private Employees manager;
-//	
-//	@OneToMany(mappedBy = "manager")
-//	private Set<Employees> subordinate=new HashSet<Employees>();
+	
+	@OneToMany(mappedBy = "manager")
+	private Set<Employees> subordinate=new HashSet<Employees>();
 	
 	
 	
@@ -46,16 +48,32 @@ public class Employees {
 	{
 		super();
 	}
-	public Employees(int id, String empName, String empEmailId, String password, int empLeaveEarned,
-			Employees manager) {
+	
+	public Employees(int id) {
+		super();
+		this.id = id;
+	}
+
+	public Employees(int id, String empName, String empEmailId, String password, int empLeaveEarned) {
 		super();
 		this.id = id;
 		this.empName = empName;
 		this.empEmailId = empEmailId;
 		this.password = password;
 		this.empLeaveEarned = empLeaveEarned;
-		this.manager =manager;
 	}
+	
+	public Employees(int id, String empName, String empEmailId, String password, int empLeaveEarned,
+			int mid) {
+		super();
+		this.id = id;
+		this.empName = empName;
+		this.empEmailId = empEmailId;
+		this.password = password;
+		this.empLeaveEarned = empLeaveEarned;
+		this.manager =new Employees(mid);
+	}
+	
 	public int getId() {
 		return id;
 	}

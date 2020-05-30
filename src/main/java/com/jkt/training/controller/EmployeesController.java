@@ -30,6 +30,12 @@ public class EmployeesController {
 		return empser.getEmployee(id);
 	}
 	
+	@GetMapping("/manager/{id}/employees")
+	public List<Employees> getManagerByEmpId(@PathVariable int id)
+	{
+		return empser.getManagerByEmpId(id);
+	}
+	
 	@PostMapping(path="/employees",consumes = "application/json")
 	public String addEmp(@RequestBody Employees employee)
 	{

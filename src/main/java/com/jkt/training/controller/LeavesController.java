@@ -16,14 +16,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jkt.training.entity.Employees;
 import com.jkt.training.entity.LeavesTrack;
 import com.jkt.training.service.LeaveService;
 
 @RestController
-@RequestMapping("/api")
 public class LeavesController {
 
 	@Autowired
@@ -34,7 +33,12 @@ public class LeavesController {
 		return service.getAllLeaves();
 	}
 	
-	@GetMapping("/leaves/{l_id}")
+	@GetMapping("/employees/{eid}/leaves")
+	public List<LeavesTrack> getAllLeavesByEmployeeId(@PathVariable int eid){
+		return service.getAllLeavesByEmployeeId(eid);
+	}
+	
+	@GetMapping("employees/{eid}/leaves/{l_id}")
 	public ResponseEntity<?> getLeavesById(@PathVariable int l_id) {
 		Optional<LeavesTrack> leaves= service.getLeavesById(l_id);
 		return leaves.map(response->ResponseEntity.ok().body(response))
@@ -53,6 +57,15 @@ public class LeavesController {
 
 	}
 	
+	//employee with leaves
+	@PostMapping(path = "/employees/{eid}/leaves",consumes = "application/json")
+	public ResponseEntity<LeavesTrack> applyEmployeeLeaves(@Valid @RequestBody LeavesTrack leaves,@PathVariable int eid)throws URISyntaxException{
+		leaves.setEmployee(new Employees(eid));
+		LeavesTrack result=service.applyLeaves(leaves);
+		return ResponseEntity.created(new URI("/api/leaves"+result.getId())).body(result);
+
+	}
+	
 	@PutMapping(path = "/leaves/{l_id}",consumes = "application/json")
 	ResponseEntity<LeavesTrack> updateLeaves(@Valid @RequestBody LeavesTrack leaves,@PathVariable int l_id){
 		//LeavesTrack result=service.updateLeaves(leaves,l_id);;
@@ -60,7 +73,15 @@ public class LeavesController {
 		return ResponseEntity.ok().body(result);
 	}
 	
-	@DeleteMapping("/leaves/{l_id}")
+	@PutMapping(path = "/employees/{eid}/leaves/{l_id}",consumes = "application/json")
+	ResponseEntity<LeavesTrack> updateLeavesByEmployeeId(@Valid @RequestBody LeavesTrack leaves,@PathVariable int l_id,@PathVariable int eid){
+		//LeavesTrack result=service.updateLeaves(leaves,l_id);;
+		leaves.setEmployee(new Employees(eid));
+		LeavesTrack result=service.applyLeaves(leaves);
+		return ResponseEntity.ok().body(result);
+	}
+	
+	@DeleteMapping("/employees/{eid}/leaves/{l_id}")
 	ResponseEntity<?> deleteLeaves(@PathVariable int l_id){
 		service.deleteLeaves(l_id);
 		return ResponseEntity.ok().build();

@@ -2,6 +2,7 @@ package com.jkt.training.service;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import com.jkt.training.entity.Employees;
 import com.jkt.training.repository.EmployeeRepository;
@@ -23,8 +24,16 @@ public class EmployeeService {
 		return emp;
 		
 	}
+	
+	public List<Employees> getManagerByEmpId(int id)
+	{
+		return emprepo.getAllByManagerId(id);
+	}
+	
 	public void addEmp(Employees employee)
 	{
+//		Optional<Employees> manager=Optional.ofNullable(employee.getManager())
+//				.flatMap(managerFromrequest->emprepo.findByEmpName(managerFromrequest.getEmpName()).;
 		emprepo.save(employee);
 	}
 	

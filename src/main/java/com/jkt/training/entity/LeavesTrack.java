@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,7 +20,8 @@ import javax.validation.constraints.NotNull;
 public class LeavesTrack {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@SequenceGenerator(name = "seq" ,initialValue =200 )
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seq")
 	private int id;
 	
 	@NotEmpty(message = "please select type of leave")
@@ -67,6 +69,26 @@ public class LeavesTrack {
 		this.acceptRejectFlag = acceptRejectFlag;
 		this.active = active;
 	}
+
+	
+	public LeavesTrack(int id, @NotEmpty(message = "please select type of leave") String type,
+			@NotEmpty(message = "please provide reason for leave") String reason,
+			@NotNull(message = "please provide start date") Date fromDate,
+			@NotNull(message = "please provide end date") Date toDate, int duration, boolean acceptRejectFlag,
+			boolean active, int eid) {
+		super();
+		this.id = id;
+		this.type = type;
+		this.reason = reason;
+		this.fromDate = fromDate;
+		this.toDate = toDate;
+		this.duration = duration;
+		this.acceptRejectFlag = acceptRejectFlag;
+		this.active = active;
+		this.employee = new Employees(eid);
+	}
+
+
 
 	public int getId() {
 		return id;
