@@ -20,8 +20,8 @@ import javax.validation.constraints.NotNull;
 public class LeavesTrack {
 
 	@Id
-	@SequenceGenerator(name = "seq" ,initialValue =200 )
-	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seq")
+	@SequenceGenerator(name = "sen")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "sen" )
 	private int id;
 	
 	@NotEmpty(message = "please select type of leave")

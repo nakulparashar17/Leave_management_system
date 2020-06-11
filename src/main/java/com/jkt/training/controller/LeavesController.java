@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ import com.jkt.training.entity.Employees;
 import com.jkt.training.entity.LeavesTrack;
 import com.jkt.training.service.LeaveService;
 
+@CrossOrigin(origins = "http://localhost:8000")
 @RestController
 public class LeavesController {
 
@@ -63,7 +65,6 @@ public class LeavesController {
 		leaves.setEmployee(new Employees(eid));
 		LeavesTrack result=service.applyLeaves(leaves);
 		return ResponseEntity.created(new URI("/api/leaves"+result.getId())).body(result);
-
 	}
 	
 	@PutMapping(path = "/leaves/{l_id}",consumes = "application/json")

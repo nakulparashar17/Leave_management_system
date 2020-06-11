@@ -1,6 +1,5 @@
 package com.jkt.training.entity;
-import java.util.HashSet;
-import java.util.Set;
+
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -9,7 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotEmpty;
 
@@ -19,30 +17,25 @@ import javax.validation.constraints.Email;
 public class Employees {
 
   	@Id
-  	@SequenceGenerator(name = "gen",initialValue = 100)
+  	@SequenceGenerator(name = "gen",initialValue = 6000)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "gen" )
 	private int id;
 	
   	@NotEmpty(message = "Provide a Employee Name!")
-  	private String empName;
+  	private String name;
   	
   	@NotEmpty(message = "Email cannot be Empty!!")
   	@Email(message = "Please provide a valid email!")
-	private String empEmailId;
+	private String email;
 
   	@NotEmpty(message = "Password cannot be Empty!!")
   	private String password;
 	
-	private int empLeaveEarned;
+	private int earnedleaves;
 	
 	@ManyToOne(cascade = CascadeType.REMOVE)
 	@JoinColumn(name = "manager_id")
 	private Employees manager;
-	
-	@OneToMany(mappedBy = "manager")
-	private Set<Employees> subordinate=new HashSet<Employees>();
-	
-	
 	
 	public Employees()
 	{
@@ -54,66 +47,82 @@ public class Employees {
 		this.id = id;
 	}
 
-	public Employees(int id, String empName, String empEmailId, String password, int empLeaveEarned) {
-		super();
-		this.id = id;
-		this.empName = empName;
-		this.empEmailId = empEmailId;
-		this.password = password;
-		this.empLeaveEarned = empLeaveEarned;
-	}
-	
-	public Employees(int id, String empName, String empEmailId, String password, int empLeaveEarned,
+
+	public Employees(int id, String name, String email, String password, int earnedleaves,
 			int mid) {
 		super();
 		this.id = id;
-		this.empName = empName;
-		this.empEmailId = empEmailId;
+		this.name = name;
+		this.email = email;
 		this.password = password;
-		this.empLeaveEarned = empLeaveEarned;
+		this.earnedleaves = earnedleaves;
 		this.manager =new Employees(mid);
 	}
-	
+
+	public Employees(int id, @NotEmpty(message = "Provide a Employee Name!") String name,
+			@NotEmpty(message = "Email cannot be Empty!!") @Email(message = "Please provide a valid email!") String email,
+			@NotEmpty(message = "Password cannot be Empty!!") String password, int earnedleaves) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.password = password;
+		this.earnedleaves = earnedleaves;
+	}
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getEmpName() {
-		return empName;
+
+	public String getName() {
+		return name;
 	}
-	public void setEmpName(String empName) {
-		this.empName = empName;
+
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getEmpEmailId() {
-		return empEmailId;
+
+	public String getEmail() {
+		return email;
 	}
-	public void setEmpEmailId(String empEmailId) {
-		this.empEmailId = empEmailId;
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public int getEmpLeaveEarned() {
-		return empLeaveEarned;
+
+	public int getEarnedleaves() {
+		return earnedleaves;
 	}
-	public void setEmpLeaveEarned(int empLeaveEarned) {
-		this.empLeaveEarned = empLeaveEarned;
+
+	public void setEarnedleaves(int earnedleaves) {
+		this.earnedleaves = earnedleaves;
 	}
+
 	public Employees getManager() {
 		return manager;
 	}
+
 	public void setManager(Employees manager) {
 		this.manager = manager;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Employees [id=" + id + ", empName=" + empName + ", empEmailId=" + empEmailId + ", password=" + password
-				+ ", empLeaveEarned=" + empLeaveEarned + ", manager=" + manager + "]";
+		return "Employees [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password
+				+ ", earnedleaves=" + earnedleaves + ", manager=" + manager + "]";
 	}
+	
+
 }
